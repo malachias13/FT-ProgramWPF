@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FT_ProgramWPF"
+        xmlns:vm="clr-namespace:FT_ProgramWPF.ViewModel"
+        d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Frame x:Name="MainWindow" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="MainWindowFrame"
+            Content="{Binding CurrentPage}"
+            NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
