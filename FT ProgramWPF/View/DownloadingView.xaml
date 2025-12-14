@@ -1,0 +1,71 @@
+﻿<Page x:Class="FT_ProgramWPF.View.DownloadingView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FT_ProgramWPF.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DownloadingView">
+
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="0, 25, 0, 0"/>
+                </Style>
+                <!--<Style TargetType="{x:Type Grid}">
+                    <Setter Property="Margin" Value="0, 25, 0, 0"/>
+                </Style>-->
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Margin" Value="0, 25, 0, 0"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button HorizontalAlignment="Left"
+                    MinHeight="30">
+                <TextBlock Text="Get Server Files"
+                           Margin="0"
+                           Padding="5"/>
+            </Button>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0"
+                        Grid.Column="0">
+                    <TextBlock Text="Date"/>
+                </Border>
+
+                <Border Grid.Row="0"
+                        Grid.Column="1">
+                    <TextBlock Text="Name"/>
+                </Border>
+
+                <Border Grid.Row="0"
+                        Grid.Column="3">
+                    <TextBlock Text="Download"/>
+                </Border>
+
+            </Grid>
+            <ItemsControl>
+                <!--<ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>-->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:Name="FileInfoTemplate">
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
