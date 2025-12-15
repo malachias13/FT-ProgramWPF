@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FT_ProgramWPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,11 @@ namespace FT_ProgramWPF.View
 	/// </summary>
 	public partial class ConnectionSetupView : Page
 	{
-		public ConnectionSetupView()
+		public ConnectionSetupView(ConnectionSetupViewModel vm)
 		{
 			InitializeComponent();
+
+			DataContext = vm;
 		}
 	}
 }

@@ -13,9 +13,39 @@ namespace FT_ProgramWPF.ViewModel
 	{
 		public Page CurrentPage { get; set; }
 
+
+		#region ViewModels
+
+		private ConnectionSetupViewModel _connectionSetupViewModel;
+
+		#endregion
+
+		#region View
+
+		private DownloadingView _DownloadingView;
+
+		#endregion
 		public MainWindowViewModel()
 		{
-			CurrentPage = new ConnectionSetupView();
+			_connectionSetupViewModel = new ConnectionSetupViewModel();
+
+
+			_connectionSetupViewModel.DisplayDownloadPage = ChangeDisplayDownloadPage;
+
+			CurrentPage = new ConnectionSetupView(_connectionSetupViewModel);
+
 		}
+
+		public void ChangeDisplayDownloadPage()
+		{
+			if (_DownloadingView == null) 
+			{
+				_DownloadingView = new DownloadingView();
+			}
+			CurrentPage = _DownloadingView;
+
+			OnPropertyChanged(nameof(CurrentPage));
+		}
+
 	}
 }
