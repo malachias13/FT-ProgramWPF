@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,13 +20,27 @@ namespace FT_ProgramWPF.ViewModel
 
 		}
 
+		private string _outputFolderPath;
 		public Action DisplayDownloadPage;
 
+		public string OutputPath {  get; set; }
 
 		[RelayCommand]
 		async void PickFolder()
 		{
 			Debug.WriteLine("PickFolder!");
+
+			var folderDialog = new OpenFolderDialog
+			{
+
+			};
+
+			if(folderDialog.ShowDialog() == true)
+			{
+				_outputFolderPath = folderDialog.FolderName;
+				OutputPath = _outputFolderPath;
+				OnPropertyChanged(nameof(OutputPath));
+			}
 		}
 
 		[RelayCommand]

@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
+VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT ProgramWPF", "FT ProgramWPF\FT ProgramWPF.csproj", "{5827BCD6-185F-43E9-824C-A7497AD3F6B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpcShared", "..\RpcShared\RpcShared.csproj", "{26068534-22AC-D41E-CCA6-8A49D8AE15C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPCServerFT", "..\RPCServerFT\RPCServerFT.csproj", "{60E37E25-1426-FECF-381E-475502326CDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{5827BCD6-185F-43E9-824C-A7497AD3F6B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5827BCD6-185F-43E9-824C-A7497AD3F6B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5827BCD6-185F-43E9-824C-A7497AD3F6B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26068534-22AC-D41E-CCA6-8A49D8AE15C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26068534-22AC-D41E-CCA6-8A49D8AE15C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26068534-22AC-D41E-CCA6-8A49D8AE15C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26068534-22AC-D41E-CCA6-8A49D8AE15C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E37E25-1426-FECF-381E-475502326CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E37E25-1426-FECF-381E-475502326CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E37E25-1426-FECF-381E-475502326CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E37E25-1426-FECF-381E-475502326CDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
