@@ -24,6 +24,7 @@
                 </Style>
             </StackPanel.Resources>
             <Button HorizontalAlignment="Left"
+                    Command="{Binding GetServerFilesCommand}"
                     MinHeight="30">
                 <TextBlock Text="Get Server Files"
                            Margin="0"
@@ -42,7 +43,8 @@
 
                 <Border Grid.Row="0"
                         Grid.Column="0">
-                    <TextBlock Text="Date"/>
+                    <TextBlock Text="Date"
+                               Margin="10,0,0,0"/>
                 </Border>
 
                 <Border Grid.Row="0"
@@ -68,16 +70,29 @@
                                 BorderBrush="LightGray"
                                 BorderThickness="1">
                             <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0" Text="{Binding Data}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                                <TextBlock Grid.Column="0"
+                                           Grid.Row="0"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding Data}"/>
                                 
-                                <Button HorizontalAlignment="Left"
+                                <TextBlock Grid.Column="1"
+                                           Grid.Row="0"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding Name}"/>
+                                
+                                <Button Command="{Binding DownloadCommand}"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Margin="0"
                                         MinHeight="30"
                                         Grid.Column="2">
                                     <TextBlock Text="Download"

@@ -9,8 +9,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MaxHeight ="10"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ProgressBar Grid.Row="0"
+                     Visibility="{Binding ProgressBarIsVisible}"
+                     Value="{Binding CurrentProgress, Mode=OneWay}" Maximum="1">
+
+        </ProgressBar>
         <Frame x:Name="MainWindowFrame"
+               Grid.Row="1"
             Content="{Binding CurrentPage}"
             NavigationUIVisibility="Hidden"/>
+
     </Grid>
 </Window>
