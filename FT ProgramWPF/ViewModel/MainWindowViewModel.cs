@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FT_ProgramWPF.Managers;
 using FT_ProgramWPF.View;
 
 namespace FT_ProgramWPF.ViewModel
@@ -16,6 +17,8 @@ namespace FT_ProgramWPF.ViewModel
 
 		private string _serverIP;
 		private string _clientOutputFolderPath;
+
+		private RpcClient _rpcClient;
 
 		#region ViewModels
 
@@ -52,6 +55,8 @@ namespace FT_ProgramWPF.ViewModel
 			CurrentPage = _DownloadingView;
 
 			OnPropertyChanged(nameof(CurrentPage));
+
+			CreateClient();
 		}
 
 		private void SetServerIP(string ip)
@@ -62,6 +67,11 @@ namespace FT_ProgramWPF.ViewModel
 		private void SetClientOutputFolder(string folder)
 		{
 			_clientOutputFolderPath = folder;
+		}
+
+		private void CreateClient()
+		{
+			_rpcClient = new RpcClient(_serverIP);
 		}
 
 	}
