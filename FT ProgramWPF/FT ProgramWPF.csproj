@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RpcShared\RpcShared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\cloud_data_download_icon.png" />
   </ItemGroup>
 

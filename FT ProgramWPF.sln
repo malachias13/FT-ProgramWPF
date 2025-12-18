@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT ProgramWPF", "FT ProgramWPF\FT ProgramWPF.csproj", "{5827BCD6-185F-43E9-824C-A7497AD3F6B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{26068534-22AC-D41E-CCA6-8A49D8AE15C4} = {26068534-22AC-D41E-CCA6-8A49D8AE15C4}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpcShared", "..\RpcShared\RpcShared.csproj", "{26068534-22AC-D41E-CCA6-8A49D8AE15C4}"
 EndProject
