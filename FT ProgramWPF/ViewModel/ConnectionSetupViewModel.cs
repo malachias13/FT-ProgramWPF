@@ -22,8 +22,11 @@ namespace FT_ProgramWPF.ViewModel
 
 		private string _outputFolderPath;
 		public Action DisplayDownloadPage;
+		public Action<string> SetOutputFolder;
+		public Action<string> SetIpAddress;
 
 		public string OutputPath {  get; set; }
+		public string IPAddressStr { get; set; }
 
 		[RelayCommand]
 		async void PickFolder()
@@ -53,9 +56,12 @@ namespace FT_ProgramWPF.ViewModel
 		async void Join()
 		{
 
+			// Check to see if user set and Output folder.
+
+			SetOutputFolder.Invoke(_outputFolderPath);
+			SetIpAddress.Invoke(IPAddressStr);
 			await Application.Current.Dispatcher.InvokeAsync(DisplayDownloadPage);
 			Debug.WriteLine("Join!");
-			//DisplayDownloadPage.Invoke();
 		}
 
 	}
