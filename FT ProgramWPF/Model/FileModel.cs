@@ -10,12 +10,6 @@ namespace FT_ProgramWPF.Model
 {
 	public class FileModel
 	{
-
-		public FileModel(string file)
-		{
-
-		}
-
 		public string? Name { get; set; }
 		public DateTime Data { get; set; }
 		public FileInfo? File { get; set; }
