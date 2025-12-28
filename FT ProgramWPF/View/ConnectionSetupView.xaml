@@ -10,10 +10,13 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ConnectionSetupView">
 
-    <ScrollViewer>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Margin="10">
         <StackPanel Orientation="Vertical">
             <Image Source="/Resources/cloud_data_download_icon.png"
                    MaxWidth="128"/>
+            <TextBlock Text="FT Program"
+                       HorizontalAlignment="Center"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="50"/>
@@ -48,6 +51,7 @@
                             MinHeight="10" HorizontalAlignment="Center"
                             Margin="0,15,0,0">
                     <Button Command="{Binding HostCommand}"
+                            IsEnabled="False"
                             Margin="0,0,10, 0"
                             MinWidth="80">
                         <TextBlock Text="Host"/>

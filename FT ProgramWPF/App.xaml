@@ -6,9 +6,39 @@
     <Application.Resources>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontSize" Value="15" />
+            <Setter Property="Foreground" Value="#f5fbea"/>
         </Style>
         <Style TargetType="{x:Type Frame}">
-            <Setter Property="Background" Value="Wheat"/>
-        </Style> 
+            <Setter Property="Background" Value="#212121"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="SelectionTextBrush" Value="#19290a"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#3c581c"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="bg"
+                       Background="{TemplateBinding Background}"
+                       Padding="10,5"
+                       BorderThickness="2"
+                       BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#7ab62c" TargetName="bg"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="Gray" TargetName="bg"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

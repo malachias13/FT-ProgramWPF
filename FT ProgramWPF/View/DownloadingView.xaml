@@ -10,10 +10,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DownloadingView">
 
-    <ScrollViewer>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Orientation="Vertical">
             <StackPanel.Resources>
-                <Style TargetType="{x:Type Button}">
+                <Style x:Key="DownloadPageButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="0, 25, 0, 0"/>
                 </Style>
                 <!--<Style TargetType="{x:Type Grid}">
@@ -25,7 +25,8 @@
             </StackPanel.Resources>
             <Button HorizontalAlignment="Left"
                     Command="{Binding GetServerFilesCommand}"
-                    MinHeight="30">
+                    MinHeight="30"
+                    Margin="5,25,0,0">
                 <TextBlock Text="Get Server Files"
                            Margin="0"
                            Padding="5"/>
@@ -92,6 +93,7 @@
                                 <Button Command="{Binding DownloadCommand}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Style="{StaticResource DownloadPageButton}"
                                         Margin="0"
                                         MinHeight="30"
                                         Grid.Column="2">
