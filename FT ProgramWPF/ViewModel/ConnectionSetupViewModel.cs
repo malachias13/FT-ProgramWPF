@@ -18,16 +18,56 @@ namespace FT_ProgramWPF.ViewModel
 
 		public ConnectionSetupViewModel()
 		{
-
+			ErrorMessageVisiblity = Visibility.Collapsed;
+			OnPropertyChanged(nameof(ErrorMessageVisiblity));
 		}
 
 		private string _outputFolderPath;
+		private string _IPAddressStr;
 		public Action DisplayDownloadPage;
 		public Action<string> SetOutputFolder;
 		public Action<string> SetIpAddress;
 
+		bool HasURL = false;
+
+		public Visibility ErrorMessageVisiblity { get; set; }
 		public string OutputPath {  get; set; }
-		public string IPAddressStr { get; set; }
+		public string IPAddressStr 
+		{
+			get { return _IPAddressStr; }
+			set 
+			{ 
+				_IPAddressStr = value;
+				validateIP();
+				OnPropertyChanged(nameof(IPAddressStr)); 
+			}
+		}
+
+		private void validateIP()
+		{
+
+			if (IPAddressStr.Length < 8)
+			{
+				HasURL = false;
+				ErrorMessageVisiblity = Visibility.Collapsed;
+				return;
+			}
+
+			string Header = IPAddressStr.Substring(0,8);
+
+			if(Header == "https://")
+			{
+				HasURL = true;
+				ErrorMessageVisiblity = Visibility.Collapsed;
+				OnPropertyChanged(nameof(ErrorMessageVisiblity));
+			}
+			else
+			{
+				ErrorMessageVisiblity = Visibility.Visible;
+				OnPropertyChanged(nameof(ErrorMessageVisiblity));
+			}
+
+		}
 
 		[RelayCommand]
 		async void PickFolder()
@@ -56,6 +96,13 @@ namespace FT_ProgramWPF.ViewModel
 		[RelayCommand]
 		async void Join()
 		{
+
+			if(!HasURL) 
+			{
+				ErrorMessageVisiblity = Visibility.Visible;
+				OnPropertyChanged(nameof(ErrorMessageVisiblity));
+				return; 
+			}
 
 			// Check to see if user set and Output folder.
 

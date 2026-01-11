@@ -21,6 +21,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="50"/>
                     <RowDefinition MinHeight="25"/>
+                    <RowDefinition MinHeight="25"/>
                     <RowDefinition MinHeight="45"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -42,11 +43,18 @@
                     </Button>
                 </StackPanel>
 
-                <TextBox Grid.Row="1"
-                         Text="{Binding IPAddressStr}"
+                <TextBlock Grid.Row="1"
+                           TextAlignment="Center"
+                           Text="invalided URL"
+                           Foreground="Red"
+                           Visibility="{Binding ErrorMessageVisiblity}"/>
+
+                <TextBox Grid.Row="2"
+                         
+                         Text="{Binding IPAddressStr, Mode=TwoWay}"
                          Margin="50,0"/>
 
-                <StackPanel Grid.Row="2"
+                <StackPanel Grid.Row="3"
                             Orientation="Horizontal"
                             MinHeight="10" HorizontalAlignment="Center"
                             Margin="0,15,0,0">
