@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using FT_ProgramWPF.Managers;
 
 namespace FT_ProgramWPF.ViewModel
 {
@@ -19,8 +20,13 @@ namespace FT_ProgramWPF.ViewModel
 		public ConnectionSetupViewModel()
 		{
 			ErrorMessageVisiblity = Visibility.Collapsed;
+			HostButtonEnable = true;
 			OnPropertyChanged(nameof(ErrorMessageVisiblity));
 		}
+
+		// Test server code
+		private RpcServer server;
+		// End test server code
 
 		private string _outputFolderPath;
 		private string _IPAddressStr;
@@ -30,6 +36,7 @@ namespace FT_ProgramWPF.ViewModel
 
 		bool HasURL = false;
 
+		public bool HostButtonEnable {  get; set; }
 		public Visibility ErrorMessageVisiblity { get; set; }
 		public string OutputPath {  get; set; }
 		public string IPAddressStr 
@@ -90,7 +97,14 @@ namespace FT_ProgramWPF.ViewModel
 		[RelayCommand]
 		async void Host()
 		{
-			
+
+			HostButtonEnable = false;
+			OnPropertyChanged(nameof(HostButtonEnable));
+
+			// Test server code!
+			server = new RpcServer(_outputFolderPath);
+
+			await Task.Run(() => server.StartServer());
 		}
 
 		[RelayCommand]
