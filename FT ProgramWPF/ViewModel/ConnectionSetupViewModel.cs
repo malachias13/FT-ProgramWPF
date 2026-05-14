@@ -26,6 +26,9 @@ namespace FT_ProgramWPF.ViewModel
 
 		// Test server code
 		private RpcServer server;
+		private string debugStr;
+
+		public string DebugStr { get; set; }
 		// End test server code
 
 		private string _outputFolderPath;
@@ -101,10 +104,22 @@ namespace FT_ProgramWPF.ViewModel
 			HostButtonEnable = false;
 			OnPropertyChanged(nameof(HostButtonEnable));
 
-			// Test server code!
-			server = new RpcServer(_outputFolderPath);
 
-			await Task.Run(() => server.StartServer());
+			try
+			{
+				// Test server code!
+				server = new RpcServer(_outputFolderPath);
+
+				await Task.Run(() => server.StartServer());
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.ToString());
+				debugStr = ex.ToString();
+
+				DebugStr = debugStr;
+			}
+
 		}
 
 		[RelayCommand]
