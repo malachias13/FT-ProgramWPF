@@ -21,12 +21,12 @@ namespace FT_ProgramWPF.Managers
 		public RpcClient(string serverAddress)
 		{
 
-			var cert = FileCollection.CreateX509Certificate2("client-Cert");
+			//var cert = FileCollection.CreateX509Certificate2("client-Cert");
 
 			var baseUri = new Uri(serverAddress);
 
 			var httpClientHandler = new HttpClientHandler();
-			httpClientHandler.ClientCertificates.Add(cert);
+			// httpClientHandler.ClientCertificates.Add(cert);
 			httpClientHandler.ServerCertificateCustomValidationCallback =
 				HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
 
