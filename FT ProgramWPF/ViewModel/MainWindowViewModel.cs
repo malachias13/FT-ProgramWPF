@@ -46,23 +46,27 @@ namespace FT_ProgramWPF.ViewModel
 
 		private ConnectionSetupViewModel _connectionSetupViewModel;
 		private DownloadingViewModel _downloadingViewModel;
+		private HostingViewModel _hostingViewModel;
 
 		#endregion
 
 		#region View
 
 		private DownloadingView _DownloadingView;
+		private HostingView _HostingView;
 
 		#endregion
 		public MainWindowViewModel()
 		{
 			_connectionSetupViewModel = new ConnectionSetupViewModel();
 			_downloadingViewModel = new DownloadingViewModel();
+			_hostingViewModel = new HostingViewModel();
 
 
 			_connectionSetupViewModel.DisplayDownloadPage = ChangeDisplayDownloadPage;
 			_connectionSetupViewModel.SetOutputFolder = SetClientOutputFolder;
 			_connectionSetupViewModel.SetIpAddress = SetServerIP;
+			_connectionSetupViewModel.DisplayHostingPage = ChangeDisplayHostingPage;
 
 			_downloadingViewModel.GetServerFilesCommand = 
 				new RelayCommand<DownloadingViewModel>(execute => RequestAndLoadServerFilesMeta());
@@ -82,6 +86,17 @@ namespace FT_ProgramWPF.ViewModel
 			OnPropertyChanged(nameof(CurrentPage));
 
 			CreateClient();
+		}
+
+		public void ChangeDisplayHostingPage()
+		{
+			if(_HostingView == null)
+			{
+				_HostingView = new HostingView(_hostingViewModel);
+			}
+			CurrentPage = _HostingView;
+			OnPropertyChanged(nameof(CurrentPage));
+
 		}
 
 		private void SetServerIP(string ip)

@@ -24,7 +24,6 @@
                     <RowDefinition MinHeight="25"/>
                     <RowDefinition MinHeight="45"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition MinHeight="30"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Vertical"
                             Grid.Row="0"
@@ -72,16 +71,6 @@
                     </Button>
 
                 </StackPanel>
-
-                <!--Testing code-->
-
-                <StackPanel Grid.Row="4"
-                            Margin="0,10,0,0">
-                    <TextBlock Text="{Binding DebugStr}"
-                               Background="White"
-                               TextWrapping="Wrap"/>
-                </StackPanel>
-
 
             </Grid>
         </StackPanel>

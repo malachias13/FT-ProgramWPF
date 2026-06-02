@@ -34,6 +34,7 @@ namespace FT_ProgramWPF.ViewModel
 		private string _outputFolderPath;
 		private string _IPAddressStr;
 		public Action DisplayDownloadPage;
+		public Action DisplayHostingPage;
 		public Action<string> SetOutputFolder;
 		public Action<string> SetIpAddress;
 
@@ -108,9 +109,11 @@ namespace FT_ProgramWPF.ViewModel
 			try
 			{
 				// Test server code!
-				server = new RpcServer(_outputFolderPath);
+				//server = new RpcServer(_outputFolderPath);
+				// Task.Run(() => server.StartServer());
 
-				await Task.Run(() => server.StartServer());
+
+				await Application.Current.Dispatcher.InvokeAsync(DisplayHostingPage);
 			}
 			catch (Exception ex)
 			{
