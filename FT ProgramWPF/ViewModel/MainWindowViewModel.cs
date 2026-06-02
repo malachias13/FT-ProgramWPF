@@ -7,6 +7,7 @@ using Grpc.Core;
 using RpcShared;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace FT_ProgramWPF.ViewModel
 {
@@ -25,13 +28,13 @@ namespace FT_ProgramWPF.ViewModel
 		public float CurrentProgress
 		{
 			get { return _currentProgress; }
-			private set{ _currentProgress = value; OnPropertyChanged(); }
+			private set { _currentProgress = value; OnPropertyChanged(); }
 		}
 
-		public Visibility ProgressBarIsVisible 
-		{ 
+		public Visibility ProgressBarIsVisible
+		{
 			get { return _progressBarIsVisible; }
-			private set { _progressBarIsVisible = value; OnPropertyChanged(); } 
+			private set { _progressBarIsVisible = value; OnPropertyChanged(); }
 		}
 
 		private string _serverIP;
@@ -68,7 +71,7 @@ namespace FT_ProgramWPF.ViewModel
 			_connectionSetupViewModel.SetIpAddress = SetServerIP;
 			_connectionSetupViewModel.DisplayHostingPage = ChangeDisplayHostingPage;
 
-			_downloadingViewModel.GetServerFilesCommand = 
+			_downloadingViewModel.GetServerFilesCommand =
 				new RelayCommand<DownloadingViewModel>(execute => RequestAndLoadServerFilesMeta());
 
 			CurrentPage = new ConnectionSetupView(_connectionSetupViewModel);
@@ -77,7 +80,7 @@ namespace FT_ProgramWPF.ViewModel
 
 		public void ChangeDisplayDownloadPage()
 		{
-			if (_DownloadingView == null) 
+			if (_DownloadingView == null)
 			{
 				_DownloadingView = new DownloadingView(_downloadingViewModel);
 			}
@@ -90,7 +93,7 @@ namespace FT_ProgramWPF.ViewModel
 
 		public void ChangeDisplayHostingPage()
 		{
-			if(_HostingView == null)
+			if (_HostingView == null)
 			{
 				_HostingView = new HostingView(_hostingViewModel);
 			}

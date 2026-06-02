@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:FT_ProgramWPF.View"
       xmlns:vm="clr-namespace:FT_ProgramWPF.ViewModel"
       xmlns:m="clr-namespace:FT_ProgramWPF.Model"
+      xmlns:elem="clr-namespace:FT_ProgramWPF.Elements"
       d:DataContext="{d:DesignInstance Type=vm:HostingViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -24,20 +25,15 @@
                    FontSize="25"
                    HorizontalAlignment="Center"/>
 
-        <ScrollViewer x:Name="LogScrollViewer"
-                      Grid.Row="1"
-                      VerticalScrollBarVisibility="Auto"
-                      VerticalAlignment="Center"       
-                      Margin="10"
-                      MinHeight="300">
-            <ItemsControl x:Name="LogItemsControl" ItemsSource="{Binding LogEntries}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" Margin="2" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <RichTextBox Grid.Row="1"
+                     elem:RichTextBoxBehavior.ItemsSource="{Binding LogEntries}"
+                     IsReadOnly="True" 
+                     VerticalScrollBarVisibility="Auto" 
+                     BorderThickness="1">
+            <RichTextBox.Document>
+                <FlowDocument />
+            </RichTextBox.Document>
+        </RichTextBox>
 
         <ScrollViewer
                      Grid.Row="2"
