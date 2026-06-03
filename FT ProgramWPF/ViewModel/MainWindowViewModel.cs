@@ -100,6 +100,8 @@ namespace FT_ProgramWPF.ViewModel
 			CurrentPage = _HostingView;
 			OnPropertyChanged(nameof(CurrentPage));
 
+			_hostingViewModel.OnDisplay();
+
 		}
 
 		private void SetServerIP(string ip)

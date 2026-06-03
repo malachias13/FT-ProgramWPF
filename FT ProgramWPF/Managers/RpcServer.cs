@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Grpc.Core;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using RPCServerFT.Services;
+using RpcShared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RpcShared;
-using RPCServerFT.Services;
-using Microsoft.Extensions.Logging;
 
 namespace FT_ProgramWPF.Managers
 {
@@ -15,6 +17,11 @@ namespace FT_ProgramWPF.Managers
 	{
 		private string serverPath;
 		private WebApplication app;
+
+		private string serverMessage;
+
+		public Action<string> OnPrintServerMessage;
+
 		public RpcServer(string _serverPath) 
 		{
 			serverPath = _serverPath;
@@ -47,13 +54,28 @@ namespace FT_ProgramWPF.Managers
 			app.UseCors("AllowAll");
 			app.MapGrpcService<TPLService>().EnableGrpcWeb();
 
-			app.Run();
+
+			app.Start();
+
+			// Handle server messages!
+			string serverUrls = string.Join(", ", app.Urls);
+			serverMessage = $"Now listening on: {serverUrls}";
+			OnPrintServerMessage.Invoke(serverMessage);
+
+			app.WaitForShutdown();
 		}
 
 		public void StopServer()
 		{
 			app?.StartAsync();
 		}
+
+		public string GetServerStartMessage()
+		{
+			return serverMessage;
+		}
+
+		public WebApplication GetWebApplication() { return app; }
 
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FT_ProgramWPF.Managers;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,25 +29,65 @@ namespace FT_ProgramWPF.ViewModel
 
 		public RichTextBox RichTextBoxCustom { get; set; }
 
+		private RpcServer server;
+
 		public HostingViewModel()
 		{
 
 			//LogEntries.CollectionChanged += LogEntries_CollectionChanged;
-			Application.Current.Dispatcher.Invoke(async () =>
-			{
+			//Application.Current.Dispatcher.Invoke(async () =>
+			//{
 
-				for (int i = 0; i < 100; i++)
-				{
-					AddLog($"{i}: Hello ffkmr rfkrkmfkmr krkf kr kf kr kf kr " +
-						$"rkflmrmfmmeomofm4ompofmmfomopm emfopmewpofmopmw fowmpofm wmfwmpo" +
-						$"wofmwkrefm fowmpfmwpf wmfpwm fjwmporm wmfpwmmrw" +
-						$"wormpwmef wekrpkmrfmwplefmwepokrr. END!");
+			//	for (int i = 0; i < 100; i++)
+			//	{
+			//		AddLog($"{i}: Hello ffkmr rfkrkmfkmr krkf kr kf kr kf kr " +
+			//			$"rkflmrmfmmeomofm4ompofmmfomopm emfopmewpofmopmw fowmpofm wmfwmpo" +
+			//			$"wofmwkrefm fowmpfmwpf wmfpwm fjwmporm wmfpwmmrw" +
+			//			$"wormpwmef wekrpkmrfmwplefmwepokrr. END!");
 
-					await Task.Delay(300);
-				}
-			});
+			//		await Task.Delay(300);
+			//	}
+			//});
+
 		}
 
+
+		public void OnDisplay()
+		{
+			// Test code!
+			server = new RpcServer("C:\\Users\\malac\\Desktop\\Output\\ServerFiles");
+
+			server.OnPrintServerMessage += printServerLogs;
+			try
+			{
+				Task.Run(() =>
+				{
+					server.StartServer();
+				});
+
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					AddLog($"END Message! CUSTOM");
+				});
+
+			}
+			catch
+			{
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					AddLog("server Error!");
+				});
+			}
+		}
+
+
+		public void printServerLogs(string message)
+		{
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				AddLog($"{message}");
+			});
+		}
 
 
 		public void AddLog(string message)
