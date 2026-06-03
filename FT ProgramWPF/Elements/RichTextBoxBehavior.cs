@@ -47,7 +47,12 @@ namespace FT_ProgramWPF.Elements
 					richTextBox.Document.Blocks.Clear();
 					foreach (var item in newCol)
 					{
-						richTextBox.Document.Blocks.Add(new Paragraph(new Run(item + "\n")));
+						// custom
+						richTextBox.Document.Blocks.Add(new Paragraph(new Run(item))
+						{
+							Margin = new Thickness(0),
+							FontSize = 18
+						});
 					}
 				}
 			}
@@ -62,7 +67,12 @@ namespace FT_ProgramWPF.Elements
 				{
 					foreach (string item in e.NewItems)
 					{
-						rtb.Document.Blocks.Add(new Paragraph(new Run(item + "\n")));
+						// custom
+						rtb.Document.Blocks.Add(new Paragraph(new Run(item))
+						{
+							Margin = new Thickness(0),
+							FontSize = 18
+						});
 					}
 					rtb.ScrollToEnd(); // Auto-scroll
 				}
