@@ -17,6 +17,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
@@ -52,6 +53,18 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+
+
+        <Button Grid.Row="3"
+                Margin="0,0, 10, 10"
+                MinHeight="20"
+                MaxHeight="45"
+                Content="Disconnect"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Right">
+            
+        </Button>
 
     </Grid>
    
