@@ -45,7 +45,9 @@ namespace FT_ProgramWPF.Managers
 			{
 				var logger = sp.GetRequiredService<ILogger<TPLService>>();
 				string serverfolderPath = serverPath;
-				return new TPLService(logger, serverfolderPath);
+				TPLService TPL = new TPLService(logger, serverfolderPath);
+				TPL.OnPrintMessage += OnPrintServerMessage;
+				return TPL;
 			});
 
 			app = builder.Build();

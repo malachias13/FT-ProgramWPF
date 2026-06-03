@@ -65,11 +65,6 @@ namespace FT_ProgramWPF.ViewModel
 					server.StartServer();
 				});
 
-				Application.Current.Dispatcher.Invoke(() =>
-				{
-					AddLog($"END Message! CUSTOM");
-				});
-
 			}
 			catch
 			{
