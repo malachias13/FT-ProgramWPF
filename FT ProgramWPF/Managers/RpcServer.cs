@@ -62,22 +62,22 @@ namespace FT_ProgramWPF.Managers
 			// Handle server messages!
 			string serverUrls = string.Join(", ", app.Urls);
 			serverMessage = $"Now listening on: {serverUrls}";
-			OnPrintServerMessage.Invoke(serverMessage);
+			OnPrintServerMessage?.Invoke(serverMessage);
 
 			app.WaitForShutdown();
 		}
 
 		public void StopServer()
 		{
-			app?.StartAsync();
+			OnPrintServerMessage?.Invoke($"Shutdown server");
+
+			app?.StopAsync();
 		}
 
 		public string GetServerStartMessage()
 		{
 			return serverMessage;
 		}
-
-		public WebApplication GetWebApplication() { return app; }
 
 	}
 }
