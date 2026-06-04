@@ -74,6 +74,9 @@ namespace FT_ProgramWPF.ViewModel
 			_downloadingViewModel.GetServerFilesCommand =
 				new RelayCommand<DownloadingViewModel>(execute => RequestAndLoadServerFilesMeta());
 
+			_downloadingViewModel.SeverToggleCommand =
+				new RelayCommand<DownloadingViewModel>(execute => ClientConnectionToggle());
+
 			CurrentPage = new ConnectionSetupView(_connectionSetupViewModel);
 			ProgressBarIsVisible = Visibility.Hidden;
 		}
@@ -119,12 +122,33 @@ namespace FT_ProgramWPF.ViewModel
 		{
 			_rpcClient = new RpcClient(_serverIP);
 			_rpcClient.OnConnectionReady += ClientConnected;
+			_rpcClient.OnDisconnected += ClientDisconnected;
 			_rpcClient.Connect();
 		}
 
 		private void ClientConnected()
 		{
 			RequestAndLoadServerFilesMeta();
+			_downloadingViewModel.SetSeverBtnStyle(true);
+		}
+
+		private void ClientDisconnected()
+		{
+			_downloadingViewModel.SetSeverBtnStyle(false);
+			_downloadingViewModel.ClearAllFiles();
+		}
+
+		private void ClientConnectionToggle()
+		{
+			if(_rpcClient?.IsConnected() == true)
+			{
+				_rpcClient?.Disconnect();
+			}
+			else
+			{
+				_downloadingViewModel.SetSeverBtnStyleConnecting();
+				_rpcClient?.Connect();	
+			}
 		}
 
 		private async Task RequestAndLoadServerFilesMeta()

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FT_ProgramWPF.Managers;
-using System.Net.Http;
+﻿using FT_ProgramWPF.Managers;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using RpcShared;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace FT_ProgramWPF.Managers
@@ -20,6 +21,7 @@ namespace FT_ProgramWPF.Managers
 		Uri baseUri;
 
 		public Action OnConnectionReady;
+		public Action OnDisconnected;
 
 		public RpcClient(string serverAddress)
 		{
@@ -48,6 +50,22 @@ namespace FT_ProgramWPF.Managers
 				OnConnectionReady?.Invoke();
 			});
 
+			await channel.WaitForStateChangedAsync(ConnectivityState.Ready, CancellationToken.None);
+
+			if (channel.State == ConnectivityState.Shutdown || channel.State == ConnectivityState.Idle)
+			{
+				OnDisconnected?.Invoke();
+			}
+		}
+
+		public async void Disconnect()
+		{
+
+			await TPLClient.SayHelloAsync(new HelloRequest { Name = "Desktop client: Disconnected." });
+
+			channel.Dispose();
+
+			OnDisconnected?.Invoke();
 		}
 
 		private async Task WaitForReadyAndExecuteAsync(GrpcChannel channel, Func<Task> onReady)

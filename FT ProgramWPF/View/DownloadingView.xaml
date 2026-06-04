@@ -132,8 +132,11 @@
         <Button Grid.Row="3"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center"
-                    Command="">
-            <TextBlock Text="Disconnect"
+                Background="{Binding ServerToggleBtnColor}"
+                Command="{Binding SeverToggleCommand}"
+                IsEnabled="{Binding ServerToggleBtnEnable}"
+                MinWidth="100">
+            <TextBlock Text="{Binding ServerToggleTxt}"
                Margin="0"
                Padding="5"/>
         </Button>
