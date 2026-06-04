@@ -8,6 +8,7 @@ using RpcShared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,8 @@ namespace FT_ProgramWPF.Managers
 		private ServerStatusTracker tracker;
 
 		public Action<string> OnPrintServerMessage;
+		public Action OnStart;
+		public Action OnStop;
 
 		public RpcServer(string _serverPath) 
 		{
@@ -84,6 +87,8 @@ namespace FT_ProgramWPF.Managers
 			{
 				string serverUrls = string.Join(", ", app.Urls);
 				serverMessage = $"Now listening on: {serverUrls}";
+
+				OnStart?.Invoke();
 				OnPrintServerMessage?.Invoke(serverMessage);
 			}
 			
@@ -96,6 +101,7 @@ namespace FT_ProgramWPF.Managers
 
 			if (null != tracker && !tracker.IsRunning)
 			{
+				OnStop?.Invoke();
 				OnPrintServerMessage?.Invoke($"Shutdown server");
 			}
 		}

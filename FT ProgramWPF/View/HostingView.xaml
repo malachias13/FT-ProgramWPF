@@ -55,17 +55,25 @@
         </ScrollViewer>
 
 
-        <Button Grid.Row="3"
-                Margin="0,0, 10, 10"
-                MinHeight="20"
-                MaxHeight="45"
-                Command="{Binding ServerToggleCommand}"
-                Content="Disconnect"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                HorizontalAlignment="Right">
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="3"
+                    Margin="0,0, 10, 10"
+                    HorizontalAlignment="Right">
             
-        </Button>
+            <Button 
+                    MinHeight="20"
+                    MaxHeight="45"
+                    MinWidth="100"
+                    Width="100"
+                    Command="{Binding ServerToggleCommand}"
+                    Content="{Binding ServerToggleTxt}"
+                    Background="{Binding ServerToggleBtnColor}"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Center"/>
+        </StackPanel>
+
+
 
     </Grid>
    

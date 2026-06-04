@@ -27,8 +27,16 @@ namespace FT_ProgramWPF.ViewModel
 	public partial class HostingViewModel : ObservableObject
 	{
 		public ObservableCollection<string> LogEntries { get; } = new ObservableCollection<string>();
+		public string ServerToggleTxt 
+		{
+			get { return serverToggleTxt; } 
+			private set { serverToggleTxt = value; OnPropertyChanged(nameof(serverToggleTxt)); }
+		}
+
+		public string ServerToggleBtnColor {  get; set; }
 
 		private RpcServer server;
+		private string serverToggleTxt;
 
 		public HostingViewModel()
 		{
@@ -47,6 +55,7 @@ namespace FT_ProgramWPF.ViewModel
 			//		await Task.Delay(300);
 			//	}
 			//});
+			ServerToggleBtnColor = "#1111";
 
 		}
 
@@ -57,6 +66,8 @@ namespace FT_ProgramWPF.ViewModel
 			server = new RpcServer("C:\\Users\\malac\\Desktop\\Output\\ServerFiles");
 
 			server.OnPrintServerMessage += printServerLogs;
+			server.OnStart += Start;
+			server.OnStop += Stop;
 			try
 			{
 				Task.Run(() =>
@@ -75,13 +86,33 @@ namespace FT_ProgramWPF.ViewModel
 		}
 
 
-		public void printServerLogs(string message)
+		private void printServerLogs(string message)
 		{
 			Application.Current.Dispatcher.Invoke(() =>
 			{
 				AddLog($"{message}");
 			});
 		}
+
+		private void Start()
+		{
+			serverToggleTxt = "Disconnect";
+			ServerToggleBtnColor = "Red";
+
+			OnPropertyChanged(nameof(serverToggleTxt));
+			OnPropertyChanged(nameof(ServerToggleBtnColor));
+
+		}
+
+		private void Stop()
+		{
+			serverToggleTxt = "Connect";
+			ServerToggleBtnColor = "#3c581c";
+
+			OnPropertyChanged(nameof(serverToggleTxt));
+			OnPropertyChanged(nameof(ServerToggleBtnColor));
+		}
+		
 
 
 		public void AddLog(string message)
@@ -98,7 +129,29 @@ namespace FT_ProgramWPF.ViewModel
 		[RelayCommand]
 		async void ServerToggle()
 		{
-			server.StopServer();
+
+			if (null != server.GetServerStatusTracker() && server.GetServerStatusTracker().IsRunning)
+			{
+				server.StopServer();
+			}
+			else
+			{
+				LogEntries.Clear();
+				try
+				{
+					await Task.Run(() =>
+					{
+						server.StartServer();
+					});
+				}
+				catch
+				{
+					Application.Current.Dispatcher.Invoke(() =>
+					{
+						AddLog("server Error!");
+					});
+				}
+			}
 		}
 
 	}
