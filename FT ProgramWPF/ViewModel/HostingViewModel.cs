@@ -37,6 +37,7 @@ namespace FT_ProgramWPF.ViewModel
 
 		private RpcServer server;
 		private string serverToggleTxt;
+		private string severPath;
 
 		public HostingViewModel()
 		{
@@ -56,18 +57,19 @@ namespace FT_ProgramWPF.ViewModel
 			//	}
 			//});
 			ServerToggleBtnColor = "#1111";
-
 		}
 
 
-		public void OnDisplay()
+		public void OnDisplay(string outputPath = "")
 		{
-			// Test code!
-			server = new RpcServer("C:\\Users\\malac\\Desktop\\Output\\ServerFiles");
+
+			severPath = outputPath;
+			server = new RpcServer(severPath);
 
 			server.OnPrintServerMessage += printServerLogs;
 			server.OnStart += Start;
 			server.OnStop += Stop;
+
 			try
 			{
 				Task.Run(() =>
@@ -76,11 +78,11 @@ namespace FT_ProgramWPF.ViewModel
 				});
 
 			}
-			catch
+			catch (Exception ex)
 			{
 				Application.Current.Dispatcher.Invoke(() =>
 				{
-					AddLog("server Error!");
+					AddLog($"{ex.ToString()}");
 				});
 			}
 		}

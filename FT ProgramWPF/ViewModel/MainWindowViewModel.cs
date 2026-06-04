@@ -100,7 +100,7 @@ namespace FT_ProgramWPF.ViewModel
 			CurrentPage = _HostingView;
 			OnPropertyChanged(nameof(CurrentPage));
 
-			_hostingViewModel.OnDisplay();
+			_hostingViewModel.OnDisplay(_clientOutputFolderPath);
 
 		}
 
@@ -114,6 +114,7 @@ namespace FT_ProgramWPF.ViewModel
 			_clientOutputFolderPath = folder;
 		}
 
+		#region ClientCode
 		private void CreateClient()
 		{
 			_rpcClient = new RpcClient(_serverIP);
@@ -194,6 +195,9 @@ namespace FT_ProgramWPF.ViewModel
 
 			Debug.WriteLine($"{model.Name} is DONE!");
 		}
+		#endregion
+
+		#region ProgressBar
 
 		private void ResetProgressBar(bool NewVisible)
 		{
@@ -214,5 +218,6 @@ namespace FT_ProgramWPF.ViewModel
 			float result = (float)current / (float)max;
 			CurrentProgress = result;
 		}
+		#endregion
 	}
 }

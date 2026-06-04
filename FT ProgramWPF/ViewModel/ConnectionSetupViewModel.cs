@@ -20,7 +20,8 @@ namespace FT_ProgramWPF.ViewModel
 		public ConnectionSetupViewModel()
 		{
 			ErrorMessageVisiblity = Visibility.Collapsed;
-			HostButtonEnable = true;
+			HostButtonEnable = false;
+			JoinButtonEnable = false;
 			OnPropertyChanged(nameof(ErrorMessageVisiblity));
 		}
 
@@ -41,8 +42,17 @@ namespace FT_ProgramWPF.ViewModel
 		bool HasURL = false;
 
 		public bool HostButtonEnable {  get; set; }
+		public bool JoinButtonEnable { get; set; }
 		public Visibility ErrorMessageVisiblity { get; set; }
-		public string OutputPath {  get; set; }
+		public string OutputPath 
+		{
+			get { return _outputFolderPath; }
+			set 
+			{
+				_outputFolderPath = value;
+				validateOutputPath();
+			}
+		}
 		public string IPAddressStr 
 		{
 			get { return _IPAddressStr; }
@@ -80,6 +90,24 @@ namespace FT_ProgramWPF.ViewModel
 
 		}
 
+		private bool validateOutputPath()
+		{
+
+			bool enableButtons = false;
+			if(_outputFolderPath != null)
+			{
+				enableButtons = true;
+			}
+
+			HostButtonEnable = enableButtons;
+			JoinButtonEnable = enableButtons;
+
+			OnPropertyChanged(nameof(HostButtonEnable));
+			OnPropertyChanged(nameof(JoinButtonEnable));
+
+			return enableButtons;
+		}
+
 		[RelayCommand]
 		async void PickFolder()
 		{
@@ -92,8 +120,8 @@ namespace FT_ProgramWPF.ViewModel
 
 			if(folderDialog.ShowDialog() == true)
 			{
-				_outputFolderPath = folderDialog.FolderName;
-				OutputPath = _outputFolderPath;
+				OutputPath = folderDialog.FolderName;
+				SetOutputFolder.Invoke(OutputPath);
 				OnPropertyChanged(nameof(OutputPath));
 			}
 		}
@@ -105,23 +133,7 @@ namespace FT_ProgramWPF.ViewModel
 			HostButtonEnable = false;
 			OnPropertyChanged(nameof(HostButtonEnable));
 
-
-			try
-			{
-				// Test server code!
-				//server = new RpcServer(_outputFolderPath);
-				// Task.Run(() => server.StartServer());
-
-
-				await Application.Current.Dispatcher.InvokeAsync(DisplayHostingPage);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				debugStr = ex.ToString();
-
-				DebugStr = debugStr;
-			}
+			await Application.Current.Dispatcher.InvokeAsync(DisplayHostingPage);
 
 		}
 
@@ -136,9 +148,6 @@ namespace FT_ProgramWPF.ViewModel
 				return; 
 			}
 
-			// Check to see if user set and Output folder.
-
-			SetOutputFolder.Invoke(_outputFolderPath);
 			SetIpAddress.Invoke(IPAddressStr);
 			await Application.Current.Dispatcher.InvokeAsync(DisplayDownloadPage);
 			Debug.WriteLine("Join!");
