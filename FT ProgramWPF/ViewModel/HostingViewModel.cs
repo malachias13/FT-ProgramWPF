@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FT_ProgramWPF.Managers;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -26,8 +27,6 @@ namespace FT_ProgramWPF.ViewModel
 	public partial class HostingViewModel : ObservableObject
 	{
 		public ObservableCollection<string> LogEntries { get; } = new ObservableCollection<string>();
-
-		public RichTextBox RichTextBoxCustom { get; set; }
 
 		private RpcServer server;
 
@@ -95,48 +94,13 @@ namespace FT_ProgramWPF.ViewModel
 		//	LogEntries.Add(new LogEntry { Message = msg, Color = color });
 		//}
 
-		// TEst code
-		private void LogEntries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		// COMMANDS
+		[RelayCommand]
+		async void ServerToggle()
 		{
-			if (e.Action == NotifyCollectionChangedAction.Add)
-			{
-				foreach (LogEntry entry in e.NewItems)
-				{
-					AppendLogEntry(entry);
-				}
-
-				// Auto-scroll to bottom
-				RichTextBoxCustom.ScrollToEnd();
-			}
+			server.StopServer();
 		}
 
-		private void AppendLogEntry(LogEntry entry)
-		{
-			var paragraph = new Paragraph();
-			var run = new Run(entry.Message + Environment.NewLine);
-
-			// Apply formatting
-			if (!string.IsNullOrEmpty(entry.Color))
-			{
-				try { run.Foreground = (Brush)new BrushConverter().ConvertFromString(entry.Color); }
-				catch { /* Handle invalid color */ }
-			}
-
-			paragraph.Inlines.Add(run);
-			RichTextBoxCustom.Document.Blocks.Add(paragraph);
-		}
-
-		//private void LogEntries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		//{
-		//	if (e.Action == NotifyCollectionChangedAction.Add)
-		//	{
-		//		// Use Dispatcher to ensure UI is updated before scrolling
-		//		Application.Current.Dispatcher.InvokeAsync(() =>
-		//		{
-		//			LogScrollViewer.ScrollToEnd();
-		//		}, System.Windows.Threading.DispatcherPriority.Loaded);
-		//	}
-		//}
 	}
 }
 

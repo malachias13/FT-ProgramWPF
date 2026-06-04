@@ -59,6 +59,7 @@
                 Margin="0,0, 10, 10"
                 MinHeight="20"
                 MaxHeight="45"
+                Command="{Binding ServerToggleCommand}"
                 Content="Disconnect"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"

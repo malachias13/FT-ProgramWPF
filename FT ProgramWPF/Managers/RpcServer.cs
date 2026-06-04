@@ -13,12 +13,26 @@ using System.Threading.Tasks;
 
 namespace FT_ProgramWPF.Managers
 {
+
+	public class ServerStatusTracker
+	{
+		public bool IsRunning { get; private set; } = false;
+
+		public ServerStatusTracker(IHostApplicationLifetime lifetime)
+		{
+			lifetime.ApplicationStarted.Register(() => IsRunning = true);
+			lifetime.ApplicationStopping.Register(() => IsRunning = false);
+			lifetime.ApplicationStopped.Register(() => IsRunning = false);
+		}
+	}
+
+
 	public class RpcServer
 	{
 		private string serverPath;
 		private WebApplication app;
-
 		private string serverMessage;
+		private ServerStatusTracker tracker;
 
 		public Action<string> OnPrintServerMessage;
 
@@ -50,6 +64,8 @@ namespace FT_ProgramWPF.Managers
 				return TPL;
 			});
 
+			builder.Services.AddSingleton<ServerStatusTracker>();
+
 			app = builder.Build();
 
 			app.UseGrpcWeb();
@@ -59,20 +75,32 @@ namespace FT_ProgramWPF.Managers
 
 			app.Start();
 
-			// Handle server messages!
-			string serverUrls = string.Join(", ", app.Urls);
-			serverMessage = $"Now listening on: {serverUrls}";
-			OnPrintServerMessage?.Invoke(serverMessage);
+			// Handle server status
+			tracker = app.Services.GetService<ServerStatusTracker>();
 
+			// Handle server messages!
+
+			if (null != tracker && tracker.IsRunning)
+			{
+				string serverUrls = string.Join(", ", app.Urls);
+				serverMessage = $"Now listening on: {serverUrls}";
+				OnPrintServerMessage?.Invoke(serverMessage);
+			}
+			
 			app.WaitForShutdown();
 		}
 
 		public void StopServer()
 		{
-			OnPrintServerMessage?.Invoke($"Shutdown server");
-
 			app?.StopAsync();
+
+			if (null != tracker && !tracker.IsRunning)
+			{
+				OnPrintServerMessage?.Invoke($"Shutdown server");
+			}
 		}
+
+		public ServerStatusTracker GetServerStatusTracker() { return tracker; }
 
 		public string GetServerStartMessage()
 		{
