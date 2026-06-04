@@ -17,18 +17,21 @@ namespace FT_ProgramWPF.Managers
 
 		GrpcChannel channel;
 		TPL.TPLClient TPLClient;
+		Uri baseUri;
+
+		public Action OnConnectionReady;
 
 		public RpcClient(string serverAddress)
 		{
+			baseUri = new Uri(serverAddress);
+		}
 
-			//var cert = FileCollection.CreateX509Certificate2("client-Cert");
 
-			var baseUri = new Uri(serverAddress);
-
-			var httpClientHandler = new HttpClientHandler();
-			// httpClientHandler.ClientCertificates.Add(cert);
-			httpClientHandler.ServerCertificateCustomValidationCallback =
-				HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+		public async void Connect()
+		{
+			var httpClientHandler = new SocketsHttpHandler();
+			httpClientHandler.SslOptions.RemoteCertificateValidationCallback =
+				(sender, certificate, chain, sslPolicyErrors) => true;
 
 			channel = GrpcChannel.ForAddress(baseUri, new GrpcChannelOptions
 			{
@@ -37,13 +40,44 @@ namespace FT_ProgramWPF.Managers
 
 			TPLClient = new TPL.TPLClient(channel);
 
-			TPLClient.SayHelloAsync(new HelloRequest { Name = "Android client!" });
+			await WaitForReadyAndExecuteAsync(channel, async () =>
+			{
+
+				await TPLClient.SayHelloAsync(new HelloRequest { Name = "Desktop client!" });
+
+				OnConnectionReady?.Invoke();
+			});
+
 		}
 
-		// TODO Make functions to get files from the server.
+		private async Task WaitForReadyAndExecuteAsync(GrpcChannel channel, Func<Task> onReady)
+		{
+			// Loop until the channel is Ready or Shutdown
+			while (channel.State != ConnectivityState.Ready && channel.State != ConnectivityState.Shutdown)
+			{
+				var currentState = channel.State;
 
+				// If idle, force a connection attempt
+				if (currentState == ConnectivityState.Idle)
+				{
+					await channel.ConnectAsync();
+				}
 
-		// TODO Get All Files info {Name, Date, maybe thumbnil}
+				// Wait for the state to change from the current state
+				// This returns immediately if the state has already changed
+				await channel.WaitForStateChangedAsync(currentState, CancellationToken.None);
+			}
+
+			if (channel.State == ConnectivityState.Ready)
+			{
+				// Channel is Ready: Execute your function
+				await onReady();
+			}
+			else
+			{
+				throw new InvalidOperationException($"Channel terminated in state: {channel.State}");
+			}
+		}
 
 		public async Task<RpcShared.FileMetadataReply> GetAllFilesMetadataAsync()
 		{
@@ -61,9 +95,6 @@ namespace FT_ProgramWPF.Managers
 			return reply;
 		}
 
-
-
-		// ToDO Get File by name {download}
 		public AsyncServerStreamingCall<FileReplay> GetFile(string filename)
 		{
 			var input = new GetFileRequest { Filename = filename };
@@ -71,6 +102,16 @@ namespace FT_ProgramWPF.Managers
 
 			return reply;
 		}
+
+		// Vaildation
+
+		public bool IsConnected()
+		{
+			if(channel ==  null) return false;
+
+			return channel.State == ConnectivityState.Ready;
+		}
+
 
 		// Could send file to server but I may just make it readonly.
 	}

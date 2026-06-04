@@ -118,13 +118,25 @@ namespace FT_ProgramWPF.ViewModel
 		private void CreateClient()
 		{
 			_rpcClient = new RpcClient(_serverIP);
+			_rpcClient.OnConnectionReady += ClientConnected;
+			_rpcClient.Connect();
+		}
 
+		private void ClientConnected()
+		{
 			RequestAndLoadServerFilesMeta();
 		}
 
 		private async Task RequestAndLoadServerFilesMeta()
 		{
 			if (_rpcClient == null) { return; }
+
+			// Validation
+			if (_rpcClient.IsConnected() == false)
+			{
+				_downloadingViewModel.ClearAllFiles();
+				return;
+			}
 
 			_downloadingViewModel.ClearAllFiles();
 
@@ -164,6 +176,12 @@ namespace FT_ProgramWPF.ViewModel
 
 		private async Task Download(FileModel model)
 		{
+			// Validation
+			if (_rpcClient.IsConnected() == false)
+			{
+				_downloadingViewModel.ClearAllFiles();
+				return;
+			}
 
 			var call = _rpcClient.GetFile(model.Name);
 			ResetProgressBar(true);
