@@ -9,104 +9,135 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DownloadingView">
-
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Orientation="Vertical">
-            <StackPanel.Resources>
-                <Style x:Key="DownloadPageButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                    <Setter Property="Margin" Value="0, 25, 0, 0"/>
-                </Style>
-                <!--<Style TargetType="{x:Type Grid}">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="DownloadPageButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Margin" Value="0, 25, 0, 0"/>
+            </Style>
+            <!--<Style TargetType="{x:Type Grid}">
                     <Setter Property="Margin" Value="0, 25, 0, 0"/>
                 </Style>-->
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="Margin" Value="0, 25, 0, 0"/>
-                </Style>
-            </StackPanel.Resources>
-            <Button HorizontalAlignment="Left"
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="Margin" Value="0, 25, 0, 0"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0"
+                    HorizontalAlignment="Left"
                     Command="{Binding GetServerFilesCommand}"
                     MinHeight="30"
-                    Margin="5,25,0,0">
-                <TextBlock Text="Get Server Files"
+                    Margin="5,5,0,0">
+            <TextBlock Text="Get Server Files"
                            Margin="0"
                            Padding="5"/>
-            </Button>
+        </Button>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1"
+              Margin="0, 10, 0, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-                <Border Grid.Row="0"
-                        Grid.Column="0">
-                    <TextBlock Text="Date"
-                               Margin="10,0,0,0"/>
-                </Border>
+            <TextBlock Text="Date"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="10,0,0,0"/>
 
-                <Border Grid.Row="0"
-                        Grid.Column="1">
-                    <TextBlock Text="Name"/>
-                </Border>
+            <TextBlock Text="Name"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       VerticalAlignment="Top"/>
 
-                <Border Grid.Row="0"
-                        Grid.Column="3">
-                    <TextBlock Text="Download"/>
-                </Border>
+            <TextBlock Text="Download"
+                       Grid.Row="0"
+                       Grid.Column="3"
+                       VerticalAlignment="Top"/>
 
-            </Grid>
-            <ItemsControl ItemsSource="{Binding Files}">
-                <!--<ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
+        </Grid>
 
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>-->
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:Name="FileInfoTemplate">
-                        <Border Padding="10"
-                                BorderBrush="LightGray"
-                                BorderThickness="1">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+        <Border Grid.Row="2"
+                MaxHeight="600"
+                VerticalAlignment="Top"
+                Margin="0,5"
+                Background="Black"
+                CornerRadius="5">
+            
+            <ScrollViewer Background="#212121"
+              Margin="0, 1, 5, 1"
+              VerticalScrollBarVisibility="Auto"
+              MaxHeight="600">
 
-                                <TextBlock Grid.Column="0"
-                                           Grid.Row="0"
-                                           VerticalAlignment="Center"
-                                           Text="{Binding Data}"/>
-                                
-                                <TextBlock Grid.Column="1"
-                                           Grid.Row="0"
-                                           VerticalAlignment="Center"
-                                           Text="{Binding Name}"/>
-                                
-                                <Button Command="{Binding DownloadCommand}"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource DownloadPageButton}"
-                                        Margin="0"
-                                        MinHeight="30"
-                                        Grid.Column="2">
-                                    <TextBlock Text="Download"
-                                               Margin="0"
-                                               Padding="5"/>
-                                </Button>
+                <ItemsControl ItemsSource="{Binding Files}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:Name="FileInfoTemplate">
+                            <Border Padding="10"
+                    BorderBrush="LightGray"
+                    BorderThickness="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
 
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-    </ScrollViewer>
+                                    <TextBlock Grid.Column="0"
+                               Grid.Row="0"
+                               VerticalAlignment="Center"
+                               Text="{Binding Data}"/>
+
+                                    <TextBlock Grid.Column="1"
+                               Grid.Row="0"
+                               VerticalAlignment="Center"
+                               Text="{Binding Name}" 
+                               TextWrapping="WrapWithOverflow"/>
+
+                                    <Button Command="{Binding DownloadCommand}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource DownloadPageButton}"
+                            Margin="0"
+                            MinHeight="30"
+                            Grid.Column="2">
+                                        <TextBlock Text="Download"
+                                   Margin="0"
+                                   Padding="5"/>
+                                    </Button>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+
+
+        <Button Grid.Row="3"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                    Command="">
+            <TextBlock Text="Disconnect"
+               Margin="0"
+               Padding="5"/>
+        </Button>
+
+    </Grid>
+
 </Page>
