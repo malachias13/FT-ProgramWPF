@@ -55,6 +55,7 @@ namespace FT_ProgramWPF.ViewModel
 
 		#region View
 
+		private ConnectionSetupView _connectionSetupView;
 		private DownloadingView _DownloadingView;
 		private HostingView _HostingView;
 
@@ -71,13 +72,20 @@ namespace FT_ProgramWPF.ViewModel
 			_connectionSetupViewModel.SetIpAddress = SetServerIP;
 			_connectionSetupViewModel.DisplayHostingPage = ChangeDisplayHostingPage;
 
+			_hostingViewModel.OnReturnToMainPage = ReturnToMainMenu;
+
 			_downloadingViewModel.GetServerFilesCommand =
 				new RelayCommand<DownloadingViewModel>(execute => RequestAndLoadServerFilesMeta());
 
 			_downloadingViewModel.SeverToggleCommand =
 				new RelayCommand<DownloadingViewModel>(execute => ClientConnectionToggle());
 
-			CurrentPage = new ConnectionSetupView(_connectionSetupViewModel);
+			_downloadingViewModel.ReturnToMainPageCommand =
+				new RelayCommand<DownloadingViewModel>(execute => ReturnToMainMenu());
+
+			_connectionSetupView = new ConnectionSetupView(_connectionSetupViewModel);
+
+			CurrentPage = _connectionSetupView;
 			ProgressBarIsVisible = Visibility.Hidden;
 		}
 
@@ -117,6 +125,12 @@ namespace FT_ProgramWPF.ViewModel
 			_clientOutputFolderPath = folder;
 		}
 
+		private void ReturnToMainMenu()
+		{
+			CurrentPage = _connectionSetupView;
+			OnPropertyChanged(nameof(CurrentPage));
+		}
+
 		#region ClientCode
 		private void CreateClient()
 		{
@@ -130,11 +144,13 @@ namespace FT_ProgramWPF.ViewModel
 		{
 			RequestAndLoadServerFilesMeta();
 			_downloadingViewModel.SetSeverBtnStyle(true);
+			_downloadingViewModel.SetReturnToMainPageBtnEnable(false);
 		}
 
 		private void ClientDisconnected()
 		{
 			_downloadingViewModel.SetSeverBtnStyle(false);
+			_downloadingViewModel.SetReturnToMainPageBtnEnable(true);
 			_downloadingViewModel.ClearAllFiles();
 		}
 
@@ -147,7 +163,7 @@ namespace FT_ProgramWPF.ViewModel
 			else
 			{
 				_downloadingViewModel.SetSeverBtnStyleConnecting();
-				_rpcClient?.Connect();	
+				_rpcClient?.Connect();
 			}
 		}
 

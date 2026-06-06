@@ -17,6 +17,7 @@ namespace FT_ProgramWPF.ViewModel
 
 		public ICommand GetServerFilesCommand {  get; set; }
 		public ICommand SeverToggleCommand { get; set; }
+		public ICommand ReturnToMainPageCommand { get; set; }
 		public string ServerToggleBtnColor { get; private set; }
 		public string ServerToggleTxt
 		{
@@ -24,6 +25,7 @@ namespace FT_ProgramWPF.ViewModel
 			private set { serverToggleTxt = value; OnPropertyChanged(nameof(serverToggleTxt)); }
 		}
 		public bool ServerToggleBtnEnable { get; set; }
+		public bool ReturnToMainPageBtnEnable { get; private set; }
 
 		private string serverToggleTxt;
 
@@ -61,6 +63,12 @@ namespace FT_ProgramWPF.ViewModel
 
 			OnPropertyChanged(nameof(serverToggleTxt));
 			OnPropertyChanged(nameof(ServerToggleBtnEnable));
+		}
+
+		public void SetReturnToMainPageBtnEnable(bool isEnable)
+		{
+			ReturnToMainPageBtnEnable = isEnable;
+			OnPropertyChanged(nameof(ReturnToMainPageBtnEnable));
 		}
 
 		public void AddFile(FileModel file)

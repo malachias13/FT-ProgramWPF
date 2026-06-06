@@ -55,12 +55,34 @@
         </ScrollViewer>
 
 
-        <StackPanel Orientation="Horizontal"
-                    Grid.Row="3"
-                    Margin="0,0, 10, 10"
-                    HorizontalAlignment="Right">
-            
-            <Button 
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Margin="10, 0, 0, 10">
+
+                <Button MinHeight="20"
+                        MaxHeight="45"
+                        MinWidth="100"
+                        Width="100"
+                        Command="{Binding ReturnToMainPageCommand}"
+                        IsEnabled="{Binding ReturnToMainPageBtnEnable}"
+                        Content="Return"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,0, 10, 10">
+                <Button 
                     MinHeight="20"
                     MaxHeight="45"
                     MinWidth="100"
@@ -71,7 +93,10 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     HorizontalAlignment="Center"/>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
+
+
 
 
 

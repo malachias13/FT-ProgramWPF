@@ -34,6 +34,9 @@ namespace FT_ProgramWPF.ViewModel
 		}
 
 		public string ServerToggleBtnColor {  get; set; }
+		public bool ReturnToMainPageBtnEnable { get; set; }
+
+		public Action OnReturnToMainPage;
 
 		private RpcServer server;
 		private string serverToggleTxt;
@@ -41,21 +44,6 @@ namespace FT_ProgramWPF.ViewModel
 
 		public HostingViewModel()
 		{
-
-			//LogEntries.CollectionChanged += LogEntries_CollectionChanged;
-			//Application.Current.Dispatcher.Invoke(async () =>
-			//{
-
-			//	for (int i = 0; i < 100; i++)
-			//	{
-			//		AddLog($"{i}: Hello ffkmr rfkrkmfkmr krkf kr kf kr kf kr " +
-			//			$"rkflmrmfmmeomofm4ompofmmfomopm emfopmewpofmopmw fowmpofm wmfwmpo" +
-			//			$"wofmwkrefm fowmpfmwpf wmfpwm fjwmporm wmfpwmmrw" +
-			//			$"wormpwmef wekrpkmrfmwplefmwepokrr. END!");
-
-			//		await Task.Delay(300);
-			//	}
-			//});
 			ServerToggleBtnColor = "#1111";
 		}
 
@@ -101,6 +89,8 @@ namespace FT_ProgramWPF.ViewModel
 			serverToggleTxt = "Disconnect";
 			ServerToggleBtnColor = "Red";
 
+			SetReturnToMainPageBtnEnable(false);
+
 			OnPropertyChanged(nameof(serverToggleTxt));
 			OnPropertyChanged(nameof(ServerToggleBtnColor));
 
@@ -111,23 +101,32 @@ namespace FT_ProgramWPF.ViewModel
 			serverToggleTxt = "Connect";
 			ServerToggleBtnColor = "#3c581c";
 
+			SetReturnToMainPageBtnEnable(true);
+
 			OnPropertyChanged(nameof(serverToggleTxt));
 			OnPropertyChanged(nameof(ServerToggleBtnColor));
 		}
-		
-
 
 		public void AddLog(string message)
 		{
 			LogEntries.Add($"[{System.DateTime.Now:T}] {message}");
 		}
 
-		//public void AddLog(string msg, string color = "Black")
-		//{
-		//	LogEntries.Add(new LogEntry { Message = msg, Color = color });
-		//}
+		public void SetReturnToMainPageBtnEnable(bool isEnable)
+		{
+			ReturnToMainPageBtnEnable = isEnable;
+			OnPropertyChanged(nameof(ReturnToMainPageBtnEnable));
+		}
 
 		// COMMANDS
+
+		[RelayCommand]
+		async void ReturnToMainPage()
+		{
+			OnReturnToMainPage?.Invoke();
+		}
+
+
 		[RelayCommand]
 		async void ServerToggle()
 		{
