@@ -128,6 +128,7 @@ namespace FT_ProgramWPF.ViewModel
 		private void ReturnToMainMenu()
 		{
 			CurrentPage = _connectionSetupView;
+			_connectionSetupViewModel.OnDisplay();
 			OnPropertyChanged(nameof(CurrentPage));
 		}
 

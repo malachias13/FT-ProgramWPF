@@ -50,6 +50,7 @@ namespace FT_ProgramWPF.ViewModel
 
 		public void OnDisplay(string outputPath = "")
 		{
+			LogEntries.Clear();
 
 			severPath = outputPath;
 			server = new RpcServer(severPath);

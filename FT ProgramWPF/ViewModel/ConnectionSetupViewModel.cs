@@ -25,13 +25,6 @@ namespace FT_ProgramWPF.ViewModel
 			OnPropertyChanged(nameof(ErrorMessageVisiblity));
 		}
 
-		// Test server code
-		private RpcServer server;
-		private string debugStr;
-
-		public string DebugStr { get; set; }
-		// End test server code
-
 		private string _outputFolderPath;
 		private string _IPAddressStr;
 		public Action DisplayDownloadPage;
@@ -62,6 +55,24 @@ namespace FT_ProgramWPF.ViewModel
 				validateIP();
 				OnPropertyChanged(nameof(IPAddressStr)); 
 			}
+		}
+
+		public void OnDisplay()
+		{
+			OutputPath = string.Empty;
+			IPAddressStr = string.Empty;
+
+			OnPropertyChanged(nameof(OutputPath));
+			OnPropertyChanged(nameof(IPAddressStr));
+
+			ErrorMessageVisiblity = Visibility.Collapsed;
+			HostButtonEnable = false;
+			JoinButtonEnable = false;
+
+			OnPropertyChanged(nameof(ErrorMessageVisiblity));
+			OnPropertyChanged(nameof(HostButtonEnable));
+			OnPropertyChanged(nameof(JoinButtonEnable));
+
 		}
 
 		private void validateIP()
