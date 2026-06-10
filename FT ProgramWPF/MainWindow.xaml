@@ -7,11 +7,13 @@
         xmlns:vm="clr-namespace:FT_ProgramWPF.ViewModel"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Background="#212121"
+        Title="FT Program" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition MaxHeight ="10"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height ="20"/>
         </Grid.RowDefinitions>
         <ProgressBar Grid.Row="0"
                      Visibility="{Binding ProgressBarIsVisible}"
@@ -22,6 +24,30 @@
                Grid.Row="1"
             Content="{Binding CurrentPage}"
             NavigationUIVisibility="Hidden"/>
+
+        <Grid HorizontalAlignment="Stretch"
+              Grid.Row="2"
+              Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="{Binding WindowsDisplayData}"
+                       Foreground="{Binding WindowsDisplayForeground}"
+                       FontSize="13"
+                       Grid.Column="0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"/>
+
+            <TextBlock Text="{Binding WindowDisplayVersion}"
+               Foreground="White"
+               HorizontalAlignment="Right"
+               FontSize="13"
+               Grid.Column="1"
+               VerticalAlignment="Center"/>
+
+        </Grid>
 
     </Grid>
 </Window>

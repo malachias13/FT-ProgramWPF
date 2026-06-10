@@ -122,8 +122,6 @@ namespace FT_ProgramWPF.ViewModel
 		[RelayCommand]
 		async void PickFolder()
 		{
-			Debug.WriteLine("PickFolder!");
-
 			var folderDialog = new OpenFolderDialog
 			{
 
@@ -161,7 +159,6 @@ namespace FT_ProgramWPF.ViewModel
 
 			SetIpAddress.Invoke(IPAddressStr);
 			await Application.Current.Dispatcher.InvokeAsync(DisplayDownloadPage);
-			Debug.WriteLine("Join!");
 		}
 
 	}

@@ -23,6 +23,8 @@ namespace FT_ProgramWPF
 
 			MainWindowViewModel vm = new MainWindowViewModel();
             DataContext = vm;
+
+            Loaded += vm.MainWindowLoaded;
         }
     }
 }

@@ -37,11 +37,32 @@ namespace FT_ProgramWPF.ViewModel
 			private set { _progressBarIsVisible = value; OnPropertyChanged(); }
 		}
 
+		public string WindowsDisplayData
+		{
+			get { return _windowsDisplayData; }
+			set { _windowsDisplayData = value; OnPropertyChanged(); }
+		}
+		public Brush WindowsDisplayForeground
+		{
+			get { return _windowsDisplayForeground; }
+			set { _windowsDisplayForeground = value; OnPropertyChanged(); }
+		}
+
+		public string WindowDisplayVersion
+		{
+			get { return _windowDisplayVersion; }
+			set { _windowDisplayVersion = value; OnPropertyChanged(); }
+		}
+
 		private string _serverIP;
 		private string _clientOutputFolderPath;
 		private float _currentProgress;
 		private Visibility _progressBarIsVisible;
 		private float _progressBarDelay = 0.5f;
+
+		private string _windowsDisplayData;
+		private string _windowDisplayVersion;
+		private Brush _windowsDisplayForeground;
 
 		private RpcClient _rpcClient;
 
@@ -87,6 +108,14 @@ namespace FT_ProgramWPF.ViewModel
 
 			CurrentPage = _connectionSetupView;
 			ProgressBarIsVisible = Visibility.Hidden;
+		}
+
+		public async void MainWindowLoaded(object sender, RoutedEventArgs e)
+		{
+
+
+			string text = "FT Program created by Malachias Harris";
+			WindowDisplayVersion = text;
 		}
 
 		public void ChangeDisplayDownloadPage()

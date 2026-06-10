@@ -9,10 +9,16 @@
     <UseWPF>true</UseWPF>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <PublishSingleFile>false</PublishSingleFile>
+    <ApplicationIcon>Resources\cloud_data_download_icon.ico</ApplicationIcon>
+    <AssemblyName>FT Program</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\cloud_data_download_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\cloud_data_download_icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
