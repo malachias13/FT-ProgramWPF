@@ -5,6 +5,7 @@ using FT_ProgramWPF.Model;
 using FT_ProgramWPF.View;
 using Grpc.Core;
 using RpcShared;
+using Squirrel;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -64,6 +65,8 @@ namespace FT_ProgramWPF.ViewModel
 		private string _windowDisplayVersion;
 		private Brush _windowsDisplayForeground;
 
+		private UpdateManager _updateManager;
+
 		private RpcClient _rpcClient;
 
 		#region ViewModels
@@ -113,9 +116,56 @@ namespace FT_ProgramWPF.ViewModel
 		public async void MainWindowLoaded(object sender, RoutedEventArgs e)
 		{
 
+			try
+			{
+				_updateManager = await UpdateManager
+					.GitHubUpdateManager(@"https://github.com/malachias13/FT-ProgramWPF");
+				string text = $"FT Program {_updateManager.CurrentlyInstalledVersion()} created by Malachias Harris";
+				WindowDisplayVersion = text;
+				CheckForUpdates();
+			}
+			catch
+			{
+				string text = "FT Program created by Malachias Harris";
+				WindowDisplayVersion = text;
+			}
+		}
 
-			string text = "FT Program created by Malachias Harris";
-			WindowDisplayVersion = text;
+		private async void CheckForUpdates()
+		{
+			try
+			{
+				SetIsCheckingForUpdates(true);
+				var UpdateInfo = await _updateManager.CheckForUpdate(false, UpdateProgressBar);
+				if (UpdateInfo.ReleasesToApply.Count  > 0)
+				{
+					// Notify the user.
+				}
+				await Task.Delay(1000).ContinueWith(tt =>
+				{
+					UpdateProgressBar(0);
+					SetIsCheckingForUpdates(false);
+				});
+			}
+			catch
+			{
+				WindowsDisplayForeground = Brushes.Red;
+				WindowsDisplayData = "Failed to update...";
+				await Task.Delay(3000).ContinueWith(tt => SetIsCheckingForUpdates(false));
+			}
+		}
+
+		private void SetIsCheckingForUpdates(bool isUpdating)
+		{
+			if (isUpdating)
+			{
+				WindowsDisplayForeground = WindowsDisplayForeground = Brushes.LimeGreen;
+				WindowsDisplayData = "Checking for updates...";
+			}
+			else
+			{
+				WindowsDisplayData = "";
+			}
 		}
 
 		public void ChangeDisplayDownloadPage()
@@ -293,6 +343,11 @@ namespace FT_ProgramWPF.ViewModel
 			CurrentProgress = 0;
 
 			ProgressBarIsVisible = NewVisible == true ? Visibility.Visible : Visibility.Hidden;
+		}
+
+		private void UpdateProgressBar(int current)
+		{
+			CurrentProgress = current;
 		}
 
 		private void UpdateProgressBar(int current, int max)
