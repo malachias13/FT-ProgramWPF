@@ -111,6 +111,7 @@ namespace FT_ProgramWPF.ViewModel
 
 			CurrentPage = _connectionSetupView;
 			ProgressBarIsVisible = Visibility.Hidden;
+			WindowsDisplayForeground = Brushes.White;
 		}
 
 		public async void MainWindowLoaded(object sender, RoutedEventArgs e)
@@ -135,16 +136,19 @@ namespace FT_ProgramWPF.ViewModel
 		{
 			try
 			{
+				ResetProgressBar(true);
 				SetIsCheckingForUpdates(true);
 				var UpdateInfo = await _updateManager.CheckForUpdate(false, UpdateProgressBar);
 				if (UpdateInfo.ReleasesToApply.Count  > 0)
 				{
 					// Notify the user.
+					Update();
 				}
 				await Task.Delay(1000).ContinueWith(tt =>
 				{
 					UpdateProgressBar(0);
 					SetIsCheckingForUpdates(false);
+					ResetProgressBar(false);
 				});
 			}
 			catch
@@ -153,6 +157,19 @@ namespace FT_ProgramWPF.ViewModel
 				WindowsDisplayData = "Failed to update...";
 				await Task.Delay(3000).ContinueWith(tt => SetIsCheckingForUpdates(false));
 			}
+		}
+
+		private void Update()
+		{
+			Task.Run(() => _updateManager.UpdateApp(UpdateProgressBar)).GetAwaiter().OnCompleted(() =>
+			{
+
+				UpdateProgressBar(0);
+				ResetProgressBar(false);
+				string text = $"File Gambit {_updateManager.CurrentlyInstalledVersion()} created by Malachias Harris";
+				WindowDisplayVersion = text;
+			});
+
 		}
 
 		private void SetIsCheckingForUpdates(bool isUpdating)
