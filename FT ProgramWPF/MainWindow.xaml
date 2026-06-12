@@ -8,6 +8,7 @@
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
         mc:Ignorable="d"
         Background="#212121"
+        Icon="/Resources/cloud_data_download_icon.png"
         Title="FT Program" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>

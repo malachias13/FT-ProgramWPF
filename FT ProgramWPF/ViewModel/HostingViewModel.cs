@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using FT_ProgramWPF.Managers;
 using Microsoft.Extensions.Hosting;
+using NuGet;
+using RpcShared.Managers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +29,7 @@ namespace FT_ProgramWPF.ViewModel
 	public partial class HostingViewModel : ObservableObject
 	{
 		public ObservableCollection<string> LogEntries { get; } = new ObservableCollection<string>();
+		public ObservableCollection<string> FileEntries { get; } = new ObservableCollection<string>();
 		public string ServerToggleTxt 
 		{
 			get { return serverToggleTxt; } 
@@ -90,6 +93,8 @@ namespace FT_ProgramWPF.ViewModel
 			serverToggleTxt = "Disconnect";
 			ServerToggleBtnColor = "Red";
 
+			DisplayHostedFiles(severPath);
+
 			SetReturnToMainPageBtnEnable(false);
 
 			OnPropertyChanged(nameof(serverToggleTxt));
@@ -117,6 +122,16 @@ namespace FT_ProgramWPF.ViewModel
 		{
 			ReturnToMainPageBtnEnable = isEnable;
 			OnPropertyChanged(nameof(ReturnToMainPageBtnEnable));
+		}
+
+		private void DisplayHostedFiles(string outputPath)
+		{
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				FileEntries.Clear();
+				FileEntries.AddRange(FolderLook.OpenFolderAndGetFileNames(outputPath));
+			});
+
 		}
 
 		// COMMANDS
