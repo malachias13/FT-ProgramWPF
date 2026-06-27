@@ -62,5 +62,7 @@ Copyright © 2026, [Malachias Harris](https://github.com/malachias13).
 
 [Services](https://github.com/malachias13/RPCServerFT/tree/main/Services).
 
+##
+
 ### Auto-Updater
 Squirrel.Windows
