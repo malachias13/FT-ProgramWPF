@@ -29,7 +29,7 @@ Example:
     "Endpoints": {
       "Http2": {
         "Url": "https://0.0.0.0:7134",
-        "Protocols": "Http2"
+        "Protocols": "Http2",
         "Certificate": {
           "Path": "certs/server.pfx",
           "Password": "your_password"
