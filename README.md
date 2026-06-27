@@ -56,7 +56,7 @@ Example:
 Copyright © 2026, [Malachias Harris](https://github.com/malachias13).
 
 ***
-### Linkined gRPC projects
+## Linkined gRPC projects
 
 [RpcShared](https://github.com/malachias13/RpcSharedFTProgram).
 
