@@ -11,6 +11,8 @@ FT Program is a Windows desktop application that can send and receive data/files
 ## Setup and Instillation
 1. Download and install the program.
 2. If you are running/using this program on a local network and don't have a SLL certificate run the following command in your terminal:
+
+
 ```Command
 dotnet dev-certs https --trust
 ```
