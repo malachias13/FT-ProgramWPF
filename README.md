@@ -17,14 +17,14 @@ dotnet dev-certs https --trust
 
    
    If you have a SLL certificate locate your appsettings.json file in the app data folder. Copy the following code and configure your certificate info.
-  ``` 
+  ```JSON
    "Certificate": {
           "Path": "certs/server.pfx",
           "Password": "your_password"
         }
 ```        
 Example:
-```
+```JSON
   "Kestrel": {
     "Endpoints": {
       "Http2": {
