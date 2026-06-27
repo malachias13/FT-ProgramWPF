@@ -11,21 +11,20 @@ FT Program is a Windows desktop application that can send and receive data/files
 ## Setup and Instillation
 1. Download and install the program.
 2. If you are running/using this program on a local network and don't have a SLL certificate run the following command in your terminal:
-3. 
 ```Command
 dotnet dev-certs https --trust
 ```
 
    
    If you have a SLL certificate locate your appsettings.json file in the app data folder. Copy the following code and configure your certificate info.
-   
+  ``` 
    "Certificate": {
           "Path": "certs/server.pfx",
           "Password": "your_password"
         }
-        
+```        
 Example:
-
+```
   "Kestrel": {
     "Endpoints": {
       "Http2": {
@@ -38,7 +37,7 @@ Example:
       }
     }
   }
-
+```
 ### Note: you can use a custom https URL.
 
 3. run your appliaction.
