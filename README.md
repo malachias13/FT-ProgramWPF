@@ -42,7 +42,7 @@ Example:
         "Password": "your_password"
       }
     }
-  }
+}
 ```
 ### Note: you can use a custom https URL.
 
