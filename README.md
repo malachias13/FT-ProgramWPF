@@ -25,18 +25,24 @@ dotnet dev-certs https --trust
 ```        
 Example:
 ```JSON
-  "Kestrel": {
-    "Endpoints": {
-      "Http2": {
-        "Url": "https://0.0.0.0:7134",
-        "Protocols": "Http2",
-        "Certificate": {
+ "Kestrel": {
+    "Endpoints": {
+      "Grpc": {
+        "Url": "https://0.0.0.0:7134",
+        "Protocols": "Http2",
+        "Certificate": {
           "Path": "certs/server.pfx",
           "Password": "your_password"
         }
-      }
-    }
-  }
+      }
+    },
+    "Certificates": {
+      "Default": {
+        "Path": "certs/server.pfx",
+        "Password": "your_password"
+      }
+    }
+  }
 ```
 ### Note: you can use a custom https URL.
 
