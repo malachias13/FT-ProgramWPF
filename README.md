@@ -44,6 +44,28 @@ Example:
     }
 }
 ```
+```JSON
+"Kestrel": {
+    "Endpoints": {
+      "Grpc": {
+        "Url": "https://0.0.0.0:7134",
+        "Protocols": "Http2",
+        "Certificate": {
+          "Path": "",
+          "Password": ""
+        }
+      }
+    },
+    "Certificates": {
+      "Default": {
+        "Path": "",
+        "Password": ""
+      }
+    }
+}
+```
+
+
 ### Note: you can use a custom https URL.
 
 3. run your appliaction.
