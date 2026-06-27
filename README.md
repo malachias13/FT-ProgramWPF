@@ -48,4 +48,4 @@ Example:
 
 ### Note: you can use a custom https URL.
 
-3. run your appliaction.
+3. Run your appliaction.
