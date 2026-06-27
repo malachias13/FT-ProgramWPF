@@ -22,9 +22,16 @@ using System.Windows.Media;
 
 namespace FT_ProgramWPF.ViewModel
 {
-	public class MainWindowViewModel : ObservableObject
+	public partial class MainWindowViewModel : ObservableObject
 	{
 		public Page CurrentPage { get; set; }
+		public UserControl UpdateWindow 
+		{ 
+			get { return _updateView; }
+			private set { }
+		}
+
+		public bool IsUpdateWindowVisible { get; set; }
 
 		public float CurrentProgress
 		{
@@ -82,6 +89,7 @@ namespace FT_ProgramWPF.ViewModel
 		private ConnectionSetupView _connectionSetupView;
 		private DownloadingView _DownloadingView;
 		private HostingView _HostingView;
+		private UpdateView _updateView;
 
 		#endregion
 		public MainWindowViewModel()
@@ -89,6 +97,8 @@ namespace FT_ProgramWPF.ViewModel
 			_connectionSetupViewModel = new ConnectionSetupViewModel();
 			_downloadingViewModel = new DownloadingViewModel();
 			_hostingViewModel = new HostingViewModel();
+
+			_updateView = new UpdateView();
 
 
 			_connectionSetupViewModel.DisplayDownloadPage = ChangeDisplayDownloadPage;
@@ -112,6 +122,8 @@ namespace FT_ProgramWPF.ViewModel
 			CurrentPage = _connectionSetupView;
 			ProgressBarIsVisible = Visibility.Hidden;
 			WindowsDisplayForeground = Brushes.White;
+
+			IsUpdateWindowVisible = false;
 		}
 
 		public async void MainWindowLoaded(object sender, RoutedEventArgs e)
@@ -163,14 +175,29 @@ namespace FT_ProgramWPF.ViewModel
 		{
 			Task.Run(() => _updateManager.UpdateApp(UpdateProgressBar)).GetAwaiter().OnCompleted(() =>
 			{
-
 				UpdateProgressBar(0);
 				ResetProgressBar(false);
 				string text = $"File Gambit {_updateManager.CurrentlyInstalledVersion()} created by Malachias Harris";
 				WindowDisplayVersion = text;
-				UpdateManager.RestartApp();
+				RestartApp();
 			});
 
+		}
+
+		private async void RestartApp()
+		{
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				IsUpdateWindowVisible = true;
+				OnPropertyChanged(nameof(IsUpdateWindowVisible));
+			});
+
+			await Task.Delay(3000);
+
+			var exePath = Process.GetCurrentProcess().MainModule.FileName;
+			Process.Start(exePath);
+			Thread.Sleep(500);
+			Application.Current.Shutdown();
 		}
 
 		private void SetIsCheckingForUpdates(bool isUpdating)

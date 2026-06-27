@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FT_ProgramWPF"
+        xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         xmlns:vm="clr-namespace:FT_ProgramWPF.ViewModel"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel}"
         mc:Ignorable="d"
@@ -25,6 +26,9 @@
                Grid.Row="1"
             Content="{Binding CurrentPage}"
             NavigationUIVisibility="Hidden"/>
+        
+        
+
 
         <Grid HorizontalAlignment="Stretch"
               Grid.Row="2"
@@ -49,6 +53,13 @@
                VerticalAlignment="Center"/>
 
         </Grid>
+
+        <modalcontrol:Modal
+            Panel.ZIndex="100"
+            IsOpen="{Binding IsUpdateWindowVisible}"
+            Grid.RowSpan="3">
+            <ContentControl Content="{Binding UpdateWindow}"/>
+        </modalcontrol:Modal>
 
     </Grid>
 </Window>
