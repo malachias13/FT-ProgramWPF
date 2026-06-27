@@ -56,6 +56,11 @@ Example:
 Copyright © 2026, [Malachias Harris](https://github.com/malachias13).
 
 ***
+### Linkined gRPC projects
+
+[RpcShared](https://github.com/malachias13/RpcSharedFTProgram).
+
+[Services](https://github.com/malachias13/RPCServerFT/tree/main/Services).
 
 ### Auto-Updater
 Squirrel.Windows
