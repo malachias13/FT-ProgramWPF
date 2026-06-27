@@ -6,7 +6,7 @@ FT Program is a Windows desktop application that can send and receive data/files
 -  A user can choose to host an instance of the server on their machine, and another user can choose to join that server as a client.
 - The host machine can choose to select a folder with all the files they want to share with all clients that connect to the server.
 
-
+[![gRPC WPF Demo FT Program](https://img.youtube.com/vi/Y-0rcbbG2c8/0.jpg)](https://www.youtube.com/watch?v=Y-0rcbbG2c8)
 
 ## Setup and Instillation
 1. Download and install the program.
