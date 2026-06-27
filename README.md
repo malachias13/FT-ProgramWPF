@@ -48,3 +48,12 @@ Example:
 > You can use a custom https URL.
 
 3. Run your appliaction.
+
+### License
+
+Copyright © 2026, [Malachias Harris](https://github.com/malachias13).
+
+***
+
+### Auto-Updater
+Squirrel.Windows
