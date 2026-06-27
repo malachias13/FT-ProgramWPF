@@ -44,8 +44,7 @@ Example:
     }
 }
 ```
-
-
-### Note: you can use a custom https URL.
+> [!NOTE]
+> You can use a custom https URL.
 
 3. Run your appliaction.
