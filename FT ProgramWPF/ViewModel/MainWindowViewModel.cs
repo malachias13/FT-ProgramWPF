@@ -168,6 +168,7 @@ namespace FT_ProgramWPF.ViewModel
 				ResetProgressBar(false);
 				string text = $"File Gambit {_updateManager.CurrentlyInstalledVersion()} created by Malachias Harris";
 				WindowDisplayVersion = text;
+				UpdateManager.RestartApp();
 			});
 
 		}
